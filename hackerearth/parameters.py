@@ -7,10 +7,10 @@ class InvalidParameterException(Exception):
 
 
 class BaseAPIParameters(object):
-    def __init__(self, client_secret, program_source, language):
+    def __init__(self, client_secret, source, lang):
         self.client_secret = client_secret
-        self.source = program_source
-        self.lang = language
+        self.source = source
+        self.lang = lang
         
         if not self.client_secret:
             raise InvalidParameterException(
@@ -58,8 +58,8 @@ class BaseAPIParameters(object):
 
 
 
-class CompileAPIParameters(object):
-    def __init__(self, client_secret, source, language,
+class CompileAPIParameters(BaseAPIParameters):
+    def __init__(self, client_secret, source, lang,
                 async=0, 
                 id=None,
                 save=1,
@@ -67,8 +67,8 @@ class CompileAPIParameters(object):
                 compressed=1
                 ):
         super(CompileAPIParameters, self).__init__(client_secret,
-            source, language)
-        
+            source, lang)
+ 
         self.id = id
         self.save = save
         self.callback = callback
@@ -89,7 +89,7 @@ class CompileAPIParameters(object):
 
 
 class RunAPIParameters(CompileAPIParameters):
-    def __init__(self, client_secret, source, language,
+    def __init__(self, client_secret, source, lang,
                 program_input=None,
                 time_limit=settings.RUN_TIME_UPPER_LIMIT,
                 memory_limit=settings.MEMORY_UPPER_LIMIT,
@@ -102,8 +102,8 @@ class RunAPIParameters(CompileAPIParameters):
                 compiled=0
                 ):
         super(RunAPIParameters, self).__init__(client_secret,
-            source, language)
-        
+            source, lang)
+ 
         self.id = id
         self.save = save
         self.callback = callback
@@ -112,7 +112,8 @@ class RunAPIParameters(CompileAPIParameters):
         self.html = html
         self.compiled = compiled
         self.time_limit = min(time_limit, settings.RUN_TIME_UPPER_LIMIT)
-        self.memory_limit = min(time_limit, settings.MEMORY_UPPER_LIMIT)
+        self.memory_limit = min(memory_limit, settings.MEMORY_UPPER_LIMIT)
+        print self.memory_limit
 
     def _build_params_dict(self):
         params = super(RunAPIParameters, self)._build_params_dict()
