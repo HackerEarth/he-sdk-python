@@ -7,16 +7,15 @@ REQUIREMENTS = [
 
 
 CLASSIFIERS = [
-
-    'Development Status :: 3 - Beta',
+    'Development Status :: 4 - Beta',
     'Intended Audience :: Developers',
-    'Topic :: Software Development :: APIs',
-    'license :: MIT License',
+    'Topic :: Internet',
+    'License :: OSI Approved :: MIT License',
     'Programming Language :: Python :: 2.6',
     'Programming Language :: Python :: 2.7',
     ]
 
-setup(name='hackerearth',
+setup(name='he-sdk-python',
       version='0.3',
       description='Python client for HackerEarth Code Checker API v3',
       url='https://github.com/HackerEarth/he-sdk-python',
