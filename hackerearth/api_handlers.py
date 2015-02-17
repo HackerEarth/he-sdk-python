@@ -7,26 +7,30 @@ from settings import COMPILE_API_ENDPOINT
 from settings import RUN_API_ENDPOINT
 from settings import CLIENT_SECRET
 
+from result import CompileResult
+from result import RunResult
+
 
 class HackerEarthAPI(object):
     def __init__(self, params):
         self.params_dict = params.get_params()
 
     def compile(self):
-        data = self.__request(COMPILE_API_ENDPOINT, self.params_dict)
-        return data
+        response = self.__request(COMPILE_API_ENDPOINT, self.params_dict)
+        result = CompileResult(response)
+        return result
 
     def run(self):
-        data = self.__request(RUN_API_ENDPOINT, self.params_dict)
-        return data
+        response = self.__request(RUN_API_ENDPOINT, self.params_dict)
+        result = RunResult(response)
+        return result
 
     def __request(self, url, params):
         try:
             response = requests.post(url, data=params)
         except Exception, e:
             print e
-        print response.text
-        return response
+        return response.text
 
 
     def __result(self, res):
