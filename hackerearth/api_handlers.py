@@ -17,20 +17,29 @@ class HackerEarthAPI(object):
 
     def compile(self):
         response = self.__request(COMPILE_API_ENDPOINT, self.params_dict)
-        result = CompileResult(response)
+        result = CompileResult(response.text)
+        if response.status_code != 200:
+            result.valid = False
+        else:
+            result.valid = True
         return result
 
     def run(self):
         response = self.__request(RUN_API_ENDPOINT, self.params_dict)
-        result = RunResult(response)
+        result = RunResult(response.text)
+        if response.status_code !=200:
+            result.valid = False
+        else:
+            result.valid = True
         return result
 
     def __request(self, url, params):
+        response = None
         try:
             response = requests.post(url, data=params)
         except Exception, e:
             print e
-        return response.text
+        return response
 
 
     def __result(self, res):
