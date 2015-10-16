@@ -11,12 +11,12 @@ class BaseAPIParameters(object):
         self.client_secret = client_secret
         self.source = source
         self.lang = lang
-        
+
         if not self.client_secret:
             raise InvalidParameterException(
-            ("client_secret is needed. If you do",
-            " not have a valid client_secret, please register your client at"
-            " https://www.hackerearth.com/api/register")
+                ("client_secret is needed. If you do",
+                 " not have a valid client_secret, please register your client at"
+                 " https://www.hackerearth.com/api/register")
             )
 
         if self.source is None:
@@ -56,19 +56,16 @@ class BaseAPIParameters(object):
         return clean_params
 
 
-
-
 class CompileAPIParameters(BaseAPIParameters):
     def __init__(self, client_secret, source, lang,
-                async=0, 
-                id=None,
-                save=1,
-                callback='',
-                compressed=1
-                ):
+                 async=0,
+                 id=None,
+                 save=1,
+                 callback='',
+                 compressed=1):
         super(CompileAPIParameters, self).__init__(client_secret,
-            source, lang)
- 
+                                                   source, lang)
+
         self.id = id
         self.save = save
         self.callback = callback
@@ -90,20 +87,19 @@ class CompileAPIParameters(BaseAPIParameters):
 
 class RunAPIParameters(CompileAPIParameters):
     def __init__(self, client_secret, source, lang,
-                program_input=None,
-                time_limit=settings.RUN_TIME_UPPER_LIMIT,
-                memory_limit=settings.MEMORY_UPPER_LIMIT,
-                async=0, 
-                id=None,
-                save=1,
-                callback='',
-                compressed=1,
-                html=1,
-                compiled=0
-                ):
+                 program_input=None,
+                 time_limit=settings.RUN_TIME_UPPER_LIMIT,
+                 memory_limit=settings.MEMORY_UPPER_LIMIT,
+                 async=0,
+                 id=None,
+                 save=1,
+                 callback='',
+                 compressed=1,
+                 html=1,
+                 compiled=0):
         super(RunAPIParameters, self).__init__(client_secret,
-            source, lang)
- 
+                                               source, lang)
+
         self.id = id
         self.save = save
         self.callback = callback
@@ -133,19 +129,27 @@ class SupportedLanguages(object):
     CPP11 = 'CPP11'
     CLOJURE = 'CLOJURE'
     CSHARP = 'CSHARP'
+    GO = 'GO'
+    HASKELL = 'HASKELL'
     JAVA = 'JAVA'
     JAVASCRIPT = 'JAVASCRIPT'
-    HASKELL = 'HASKELL'
+    JAVASCRIPT_NODE = 'JAVASCRIPT_NODE'
+    OBJECTIVEC = 'OBJECTIVEC'
+    PASCAL = 'PASCAL'
     PERL = 'PERL'
     PHP = 'PHP'
     PYTHON = 'PYTHON'
+    R = 'R'
     RUBY = 'RUBY'
+    RUST = 'RUST'
+    SCALA = 'SCALA'
 
     @classmethod
     def is_lang_valid(cls, lang):
         """Checks whether the given language is supported
         by HackerEarth API.
         """
-        if not lang in cls.__dict__:
+
+        if lang not in cls.__dict__:
             return False
         return True
